@@ -1,16 +1,14 @@
-from pandas import read_csv, option_context, DataFrame
-from sqlalchemy import create_engine
+from pandas import DataFrame
 
 from com.ezyvet.util.formatter import format_title, capitalize_acronym, string_to_datetime, \
     prefix_phone_number_for_contact
 
-db_engine = create_engine('mysql+pymysql://root:example@localhost/test')
-contact_table_columns = ['id', 'title', 'first_name', 'last_name', 'company_name', 'date_of_birth', 'notes']
-address_table_columns = ['id', 'contact_id', 'street1', 'street2', 'suburb', 'city', 'post_code']
-phone_table_columns = ['id', 'contact_id', 'name', 'content', 'type']
 
-
-class CustomerContacts:
+class CustomerContactsBuilder:
+    """
+    CustomerContactsBuilder takes a customer contacts (pandas) dataframe and
+    provides API to get subset of columns as contact, address and phone
+    """
 
     def __init__(self, all_contacts):
         self.all_contacts = all_contacts

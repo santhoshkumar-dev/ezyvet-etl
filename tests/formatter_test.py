@@ -1,7 +1,8 @@
 import unittest
 from datetime import datetime
 
-from com.ezyvet.util.formatter import format_title, capitalize_acronym, string_to_datetime
+from com.ezyvet.util.formatter import format_title, capitalize_acronym, string_to_datetime, get_number_from_string, \
+    prefix_phone_number_for_contact
 
 
 class FormatterTest(unittest.TestCase):
@@ -35,6 +36,20 @@ class FormatterTest(unittest.TestCase):
 
     def test_string_to_datetime_with_empty_string(self):
         self.assertEqual(None, string_to_datetime(''))
+
+    def test_get_number_from_string(self):
+        self.assertEqual('095594886', get_number_from_string('09 559-4886'))
+
+    def test_get_number_from_string_with_brackets(self):
+        self.assertEqual('093828858', get_number_from_string('(09) 382-8858'))
+
+    def test_prefix_phone_number_for_contact(self):
+        self.assertEqual({'contact_id': '1', 'content': '095559462', 'name': 'Home', 'type': 'Home'},
+                         prefix_phone_number_for_contact('1', '555 9462', 'Home', '09'))
+
+    def test_prefix_phone_number_for_contact_with_already_prefixed_one(self):
+        self.assertEqual({'contact_id': '1', 'content': '093828858', 'name': 'Work', 'type': 'Work'},
+                         prefix_phone_number_for_contact('1', '(09) 382-8858', 'Work', '09'))
 
 
 if __name__ == '__main__':
