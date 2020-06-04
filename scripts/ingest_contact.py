@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import argparse
 
-from pandas import read_csv, option_context
+from pandas import read_csv
 from sqlalchemy import create_engine
 
 from com.ezyvet.contacts import CustomerContactsBuilder
